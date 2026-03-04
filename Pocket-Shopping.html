@@ -319,6 +319,18 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .rcpt-btn.secondary{background:var(--bg2);color:var(--text);border:1px solid var(--border);}
 .rcpt-btn.secondary:hover{border-color:var(--primary);color:var(--primary);}
 #placeOrderBtn.loading{opacity:0.7;pointer-events:none;}
+/* ── DELIVERED CARDS ── */
+.delivered-card{background:linear-gradient(160deg,#1a1a28 0%,#15151f 100%);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s;position:relative;display:flex;gap:0;flex-direction:column;}
+.delivered-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,0.4);border-color:rgba(34,197,94,0.4);}
+.delivered-card-img{height:100px;display:flex;align-items:center;justify-content:center;background:linear-gradient(145deg,#1e1e2e 0%,#12121a 100%);font-size:3.2rem;position:relative;}
+.delivered-badge{position:absolute;top:8px;right:8px;background:rgba(34,197,94,0.9);color:#fff;font-size:0.65rem;font-weight:800;padding:3px 8px;border-radius:20px;letter-spacing:0.5px;}
+.delivered-card-body{padding:12px 14px 14px;}
+.delivered-card-name{font-weight:700;font-size:0.88rem;margin-bottom:3px;line-height:1.3;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.delivered-card-date{font-size:0.72rem;color:var(--muted);margin-bottom:8px;}
+.delivered-card-price{font-family:'Playfair Display',serif;font-size:1.1rem;font-weight:900;color:var(--primary);margin-bottom:10px;}
+.delivered-card-btns{display:flex;gap:6px;}
+.delivered-card-btns .add-cart-btn{font-size:0.78rem;padding:8px 6px;}
+.delivered-card-btns .buy-now-btn{font-size:0.78rem;padding:8px 6px;}
 </style>
 </head>
 <body>
@@ -347,9 +359,9 @@ textarea.admin-input{min-height:72px;resize:vertical;}
     </div>
     <!-- REGISTER -->
     <div id="registerForm" style="display:none">
-      <div class="form-group"><label>Full Name</label><input class="auth-input" id="regName" placeholder="Your name"/></div>
+      <div class="form-group"><label>Full Name</label><input class="auth-input" id="regName" placeholder="Priya Sharma"/></div>
       <div class="form-group"><label>Email</label><input class="auth-input" id="regEmail" type="email" placeholder="you@example.com"/></div>
-      <div class="form-group"><label>Phone</label><input class="auth-input" id="regPhone" type="tel" placeholder="9025461022"/></div>
+      <div class="form-group"><label>Phone</label><input class="auth-input" id="regPhone" type="tel" placeholder="9876543210"/></div>
       <div class="form-group"><label>Password</label><input class="auth-input" id="regPass" type="password" placeholder="Min 6 characters"/></div>
       <div class="form-group"><label>Confirm Password</label><input class="auth-input" id="regConfirm" type="password" placeholder="Repeat password"/></div>
       <div class="auth-msg" id="regMsg"></div>
@@ -646,6 +658,17 @@ textarea.admin-input{min-height:72px;resize:vertical;}
   <div class="modal orders-modal">
     <button class="modal-close" onclick="closeModal('ordersModal')">✕</button>
     <h3 style="font-family:'Playfair Display',serif;margin-bottom:20px">📦 My Orders</h3>
+    <!-- Previously Delivered -->
+    <div id="deliveredSection" style="display:none;margin-bottom:28px">
+      <div style="display:flex;align-items:center;gap:10px;margin-bottom:14px;padding-bottom:12px;border-bottom:1px solid var(--border)">
+        <span style="font-size:1.3rem">✅</span>
+        <div>
+          <div style="font-weight:700;font-size:0.95rem">Previously Delivered</div>
+          <div style="color:var(--muted);font-size:0.78rem">Products you've received — order again anytime</div>
+        </div>
+      </div>
+      <div id="deliveredGrid" style="display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-bottom:8px"></div>
+    </div>
     <div id="myOrdersList"></div>
   </div>
 </div>
@@ -867,6 +890,55 @@ function renderStore(cat) {
 }
 
 function doSearch() { renderStore(); }
+
+function renderDeliveredProducts() {
+  var section = document.getElementById('deliveredSection');
+  var grid = document.getElementById('deliveredGrid');
+  if (!currentUser || currentUser.role === 'admin') { section.style.display = 'none'; return; }
+
+  var orders = gLS('snx_orders', []).filter(function(o){
+    return o.userId === currentUser.id && o.status === 'Delivered';
+  });
+  if (!orders.length) { section.style.display = 'none'; return; }
+
+  // Collect unique delivered products with most recent delivery date
+  var seen = {};
+  orders.forEach(function(o) {
+    o.items.forEach(function(item) {
+      if (!seen[item.id] || seen[item.id].date < o.date) {
+        seen[item.id] = { item: item, date: o.date };
+      }
+    });
+  });
+
+  var products = gLS('snx_products', []);
+  var deliveredHtml = Object.keys(seen).map(function(pid) {
+    var entry = seen[pid];
+    var item = entry.item;
+    // Get latest product info (stock, price)
+    var latest = products.find(function(p){ return p.id === pid; }) || item;
+    var sold = (latest.stock !== undefined ? latest.stock : 1) <= 0;
+    return '<div class="delivered-card" onclick="closeModal(\'ordersModal\');openProductModal(\'' + pid + '\')">' +
+      '<div class="delivered-card-img">' + (item.emoji || '📦') +
+        '<span class="delivered-badge">✓ Delivered</span>' +
+      '</div>' +
+      '<div class="delivered-card-body">' +
+        '<div class="delivered-card-name" title="' + item.name + '">' + item.name + '</div>' +
+        '<div class="delivered-card-date">🗓 Last delivered: ' + entry.date + '</div>' +
+        '<div class="delivered-card-price">₹' + Math.round(latest.price || item.price) + '</div>' +
+        '<div class="delivered-card-btns" onclick="event.stopPropagation()">' +
+          '<button class="add-cart-btn"' + (sold ? ' disabled' : '') + ' onclick="addToCart(\'' + pid + '\')">' +
+            (sold ? 'Sold Out' : '🛒 Cart') +
+          '</button>' +
+          (!sold ? '<button class="buy-now-btn" onclick="buyNow(\'' + pid + '\')">⚡ Buy</button>' : '') +
+        '</div>' +
+      '</div>' +
+    '</div>';
+  }).join('');
+
+  grid.innerHTML = deliveredHtml;
+  section.style.display = 'block';
+}
 
 // ═══════════════════ PRODUCT MODAL ═══════════════════
 
@@ -1279,6 +1351,7 @@ function launchConfetti() {
 
 function openMyOrders() {
   if (!currentUser || currentUser.role === 'admin') return;
+  renderDeliveredProducts();
   var orders = gLS('snx_orders', []).filter(function(o){ return o.userId === currentUser.id; });
   var el = document.getElementById('myOrdersList');
   if (!orders.length) {
