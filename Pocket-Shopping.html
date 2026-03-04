@@ -169,12 +169,14 @@ nav{display:flex;align-items:center;gap:16px;padding:0 28px;height:64px;backgrou
 .pay-opt.active{border-color:var(--primary);background:rgba(255,107,0,0.08);color:var(--primary);}
 .place-order-btn{width:100%;padding:14px;background:linear-gradient(135deg,var(--primary),var(--primary2));border:none;border-radius:12px;color:#fff;font-family:'DM Sans',sans-serif;font-weight:700;font-size:1rem;cursor:pointer;margin-top:16px;}
 .place-order-btn:disabled{opacity:0.5;cursor:not-allowed;}
+  
 /* Success modal */
 .success-modal{max-width:520px;text-align:center;}
 .success-icon{font-size:4rem;margin-bottom:12px;}
 .receipt-box{background:var(--bg3);border:1px solid var(--border);border-radius:12px;padding:18px;margin:20px 0;text-align:left;}
 .rcpt-row{display:flex;justify-content:space-between;font-size:0.85rem;padding:6px 0;border-bottom:1px solid var(--border);}
 .rcpt-row:last-child{border:none;}
+  
 /* My Orders modal */
 .orders-modal{max-width:640px;}
 .order-card{background:var(--bg3);border:1px solid var(--border);border-radius:14px;padding:18px;margin-bottom:12px;}
@@ -187,6 +189,7 @@ nav{display:flex;align-items:center;gap:16px;padding:0 28px;height:64px;backgrou
 .track-dot{width:24px;height:24px;border-radius:50%;border:2px solid var(--border);background:var(--bg);display:flex;align-items:center;justify-content:center;font-size:0.65rem;}
 .track-step.done .track-dot{background:var(--success);border-color:var(--success);color:#fff;}
 .track-label{font-size:0.65rem;color:var(--muted);text-align:center;}
+  
 /* ── ADMIN PAGE ── */
 #adminPage{min-height:100vh;}
 .admin-wrap{max-width:1200px;margin:0 auto;padding:30px 24px;}
@@ -195,6 +198,7 @@ nav{display:flex;align-items:center;gap:16px;padding:0 28px;height:64px;backgrou
 .admin-tab.active{background:var(--primary);color:#fff;}
 .admin-panel{display:none;}
 .admin-panel.active{display:block;}
+  
 /* Stats */
 .stats-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(180px,1fr));gap:16px;margin-bottom:28px;}
 .stat-card{background:var(--card);border:1px solid var(--border);border-radius:14px;padding:20px;}
@@ -204,6 +208,7 @@ nav{display:flex;align-items:center;gap:16px;padding:0 28px;height:64px;backgrou
 .green{color:var(--success);}
 .gold{color:var(--gold);}
 .red{color:var(--danger);}
+  
 /* Admin form */
 .admin-form-card{background:var(--card);border:1px solid var(--border);border-radius:16px;padding:24px;margin-bottom:28px;}
 .admin-form-card h3{font-family:'Playfair Display',serif;font-size:1.15rem;margin-bottom:20px;}
@@ -238,6 +243,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .toast.success{background:#14532d;color:#86efac;border:1px solid #166534;}
 .toast.error{background:#450a0a;color:#fca5a5;border:1px solid #7f1d1d;}
 @keyframes slideIn{from{transform:translateX(120px);opacity:0;}to{transform:translateX(0);opacity:1;}}
+  
 /* Misc */
 .empty-state{text-align:center;padding:60px 20px;color:var(--muted);}
 .empty-state div{font-size:3rem;margin-bottom:12px;}
@@ -257,6 +263,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .pay-method:hover{border-color:var(--primary);}
 .pay-method.active{border-color:var(--primary);background:rgba(255,107,0,0.08);color:var(--primary);}
 .pay-icon{font-size:1.3rem;}
+  
 /* ── CARD FIELDS ── */
 #cardFields{background:var(--bg2);border:1px solid var(--border);border-radius:12px;padding:16px;margin-bottom:18px;}
 .admin-input-label{display:block;font-size:0.78rem;text-transform:uppercase;letter-spacing:1.5px;color:var(--muted);font-weight:600;margin-bottom:6px;}
@@ -300,6 +307,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .receipt-info-grid{display:grid;grid-template-columns:1fr 1fr;gap:12px;margin-top:16px;}
 .receipt-info-box{background:var(--bg2);border-radius:10px;padding:14px;}
 .receipt-info-val{font-size:0.85rem;font-weight:500;margin-top:4px;line-height:1.5;}
+  
 /* Tracking timeline */
 .tracking-timeline{display:flex;align-items:flex-start;justify-content:space-between;margin-top:12px;position:relative;}
 .track-step{display:flex;flex-direction:column;align-items:center;flex:1;position:relative;}
@@ -312,6 +320,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .track-step.done .track-line{background:var(--success);}
 .track-label{font-size:0.72rem;color:var(--muted);margin-top:8px;text-align:center;font-weight:500;}
 .track-step.done .track-label,.track-step.active .track-label{color:var(--text);}
+  
 /* Receipt buttons */
 .rcpt-btn{flex:1;padding:13px;border-radius:10px;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;font-weight:700;font-size:0.9rem;transition:all 0.2s;}
 .rcpt-btn.primary{background:var(--primary);color:white;}
@@ -319,6 +328,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
 .rcpt-btn.secondary{background:var(--bg2);color:var(--text);border:1px solid var(--border);}
 .rcpt-btn.secondary:hover{border-color:var(--primary);color:var(--primary);}
 #placeOrderBtn.loading{opacity:0.7;pointer-events:none;}
+  
 /* ── DELIVERED CARDS ── */
 .delivered-card{background:linear-gradient(160deg,#1a1a28 0%,#15151f 100%);border:1px solid var(--border);border-radius:16px;overflow:hidden;cursor:pointer;transition:all 0.3s;position:relative;display:flex;gap:0;flex-direction:column;}
 .delivered-card:hover{transform:translateY(-4px);box-shadow:0 16px 32px rgba(0,0,0,0.4);border-color:rgba(34,197,94,0.4);}
@@ -349,6 +359,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
       <button class="auth-tab active" id="tabLogin" onclick="switchTab('login')">Sign In</button>
       <button class="auth-tab" id="tabReg" onclick="switchTab('register')">Register</button>
     </div>
+    
     <!-- LOGIN -->
     <div id="loginForm">
       <div class="form-group"><label>Email</label><input class="auth-input" id="loginEmail" type="email" placeholder="you@example.com"/></div>
@@ -357,9 +368,10 @@ textarea.admin-input{min-height:72px;resize:vertical;}
       <button class="auth-btn" onclick="doLogin()">Sign In</button>
       <div class="hint-box" id="adminHint">Admin credentials — Email: <span id="hintEmail"></span> · Password: <span>admin123</span></div>
     </div>
+    
     <!-- REGISTER -->
     <div id="registerForm" style="display:none">
-      <div class="form-group"><label>Full Name</label><input class="auth-input" id="regName" placeholder="Priya Sharma"/></div>
+      <div class="form-group"><label>Full Name</label><input class="auth-input" id="regName" placeholder="Your Name"/></div>
       <div class="form-group"><label>Email</label><input class="auth-input" id="regEmail" type="email" placeholder="you@example.com"/></div>
       <div class="form-group"><label>Phone</label><input class="auth-input" id="regPhone" type="tel" placeholder="9876543210"/></div>
       <div class="form-group"><label>Password</label><input class="auth-input" id="regPass" type="password" placeholder="Min 6 characters"/></div>
@@ -417,11 +429,13 @@ textarea.admin-input{min-height:72px;resize:vertical;}
       <button class="admin-tab" onclick="switchAdminTab('inventory')">📋 Inventory</button>
       <button class="admin-tab" onclick="switchAdminTab('reviews')">⭐ Reviews</button>
     </div>
+    
     <!-- DASHBOARD -->
     <div class="admin-panel active" id="dashboardPanel">
       <div class="stats-grid" id="dashStats"></div>
       <div id="recentActivity"></div>
     </div>
+    
     <!-- PRODUCTS -->
     <div class="admin-panel" id="productsPanel">
       <div class="admin-form-card">
@@ -457,16 +471,19 @@ textarea.admin-input{min-height:72px;resize:vertical;}
       <div id="adminProdList"></div>
     </div>
     <!-- ORDERS -->
+    
     <div class="admin-panel" id="ordersPanel">
       <div class="section-header"><span class="section-title">All Orders</span></div>
       <div id="adminOrdersList"></div>
     </div>
     <!-- CUSTOMERS -->
+    
     <div class="admin-panel" id="customersPanel">
       <div class="section-header"><span class="section-title">Registered Customers</span></div>
       <div id="adminCustList"></div>
     </div>
     <!-- INVENTORY -->
+    
     <div class="admin-panel" id="inventoryPanel">
       <div class="section-header">
         <span class="section-title">Inventory Management</span>
@@ -475,6 +492,7 @@ textarea.admin-input{min-height:72px;resize:vertical;}
       <div id="lowStockWrap" style="margin-bottom:20px"></div>
       <div id="inventoryTableWrap"></div>
     </div>
+    
     <!-- REVIEWS -->
     <div class="admin-panel" id="reviewsPanel">
       <div class="section-header"><span class="section-title">Customer Reviews</span></div>
@@ -915,6 +933,7 @@ function renderDeliveredProducts() {
   var deliveredHtml = Object.keys(seen).map(function(pid) {
     var entry = seen[pid];
     var item = entry.item;
+    
     // Get latest product info (stock, price)
     var latest = products.find(function(p){ return p.id === pid; }) || item;
     var sold = (latest.stock !== undefined ? latest.stock : 1) <= 0;
@@ -1671,6 +1690,7 @@ function seedProducts() {
 (function init() {
   seedProducts();
   initEmojiPicker();
+  
   // Show auth page
   document.getElementById('authPage').classList.add('active');
   setLoginType('customer');
